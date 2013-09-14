@@ -33,12 +33,23 @@ public:
 			cout<<count<<" apples have grown"<<endl;
 
 		}
+		
+		void shake(){
+			unsigned int count = rand()%100;
+
+			for(int  i = 0; i!=count; i++){
+				this->apples.pop_back();
+			}
+
+			cout<<"Number of the apple "<<this->apples.size()<<endl;
+			cout<<count<<" apples have shaken"<<endl;
+		}
 
 };
 
 			int main(){
 				unsigned int n = 0 ;
-				cout<<"count of apples"<<endl;
+				cout<<"count of apples : ";
 				cin>>n;
 				if(n < 0)
 					cout<<"incorrect number"<<endl;
@@ -49,11 +60,14 @@ public:
 
 				while(true)
 				{
-				cout<<"Inter the command (grow  \\ exit)"<<endl;
+				cout<<"Inter the command (grow \\ shake \\ exit)"<<endl;
 				cin>>str;
 
 				if(str == "grow"){
 					tree->grow();
+				}
+				else if(str == "shake"){
+					tree->shake();
 				}
 				else if(str == "exit"){
 					return 0;
@@ -61,3 +75,6 @@ public:
 
 				}
 			}
+
+
+
