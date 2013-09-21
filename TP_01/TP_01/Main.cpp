@@ -16,30 +16,32 @@ public:
 class Tree {
 private:
 	vector <Apple> apples;
+	int bApple ;
 public:
-	Tree(){};
+	Tree(){
+		this->bApple = 0;
+	};
 	~Tree(){
 		this->apples.clear();
 	}
 	Tree(unsigned int n){
-		for(int  i = 0; i < n; i++){
-			this->apples.push_back(*(new Apple(rand()%20)));
-		}
+		this->bApple = n;
 	};
 
-		void grow(){
-			unsigned int count = rand()%100;
+		bool grow(){
+			unsigned int count = rand()%(this->bApple);
+			this->bApple-=count;
 
 			for(int  i = 0; i!=count; i++){
 				this->apples.push_back(*(new Apple(rand()%20)));
 			}
 			cout<<"Number of the apple "<<this->apples.size()<<endl;
 			cout<<count<<" apples have grown"<<endl;
-
+			return true;
 		}
 		
 		void shake(){
-			unsigned int count = rand()%100;
+			unsigned int count = rand()%(this->apples.size());
 
 			for(int  i = 0; i!=count; i++){
 				this->apples.pop_back();
@@ -48,6 +50,14 @@ public:
 			cout<<"Number of the apple "<<this->apples.size()<<endl;
 			cout<<count<<" apples have shaken"<<endl;
 		}
+
+		bool bloom()
+		{
+			cout<<"all good"<<endl;
+			this->bApple+=rand()%30;
+			return true;
+		}
+
 
 	int AmountSeeds()
 	{
@@ -63,32 +73,33 @@ public:
 
 
 			int main(){
-				unsigned int n = 0 ;
-				cout<<"count of apples : ";
-				cin>>n;
-				if(n < 0)
-					cout<<"incorrect number"<<endl;
-
-				Tree *tree = new Tree(n);
+				Tree *tree = new Tree();
 
 				string str = "";
+				bool grow = false;
+				bool bloom = false;
+
 
 				while(true)
 				{
-				cout<<"Inter the command (grow \\ shake \\ exit\\getAmountSeeds)"<<endl;
+				cout<<"Inter the command (grow \\ shake \\ exit\\ getAmountSeeds\\ bloom)"<<endl;
 				cin>>str;
 
-				if(str == "grow"){
-					tree->grow();
+				if(str == "grow" && bloom){
+					grow = tree->grow();
 				}
-				else if(str == "shake"){
-					tree->shake();
+				else if(str == "shake" && grow){
+					 tree->shake();
 				}
 				else if(str == "exit"){
 					return 0;
 				}
-				else if(str == "getAmountSeeds")
+				else if(str == "getAmountSeeds" && grow){
 					cout<<"Amount of seeds : "<<tree->AmountSeeds()<<endl;
+				}
+				else if(str == "bloom"){
+					bloom = tree->bloom();
+				}
 				}
 			}
 
